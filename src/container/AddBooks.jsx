@@ -1,20 +1,52 @@
 import { useState } from "react";
+import { connect } from "react-redux";
+import { addBook } from "../redux/actions/actionAddBooks";
+import FlipMove from "react-flip-move";
 
 
-const AddBooks = () => {
+const AddBooks = ({libraryData, addBook}) => {
 
   const initialState = {
     title: "",
     author: ""
   }
 
+  // console.log(libraryData)
+
   const [newData, setNewData] = useState(initialState)
   // console.log(newData)
 
   const handleSubmit = (event) => {
       event.preventDefault()
-      console.log(newData)
+      // console.log(newData)
+      addBook(newData)
+
+      // vider le input
+      setNewData(initialState)
   }
+
+  const displayData = libraryData.length > 0 ?
+  
+    <FlipMove>
+      {
+        libraryData.map((data) => {
+          return (
+            <li key={data.id} className="list-group-item list-group-item-light d-flex justify-content-between">
+              <span><strong>Titre: </strong>{data.title}</span>
+              <span><strong>Auteur: </strong>{data.author}</span>
+              <span className="btn btn-danger">X</span>
+            </li>
+            )
+        })
+      }
+      </FlipMove>
+      : <p className="text-center">Aucune data à afficher</p>
+
+  const deletAllBooksBtn = libraryData.length > 0 &&
+         <div className="d-flex justify-content-center">
+            <button className="btn btn-danger mt-4 mb-5">Effacer tous les livres</button>
+        </div>
+
 
   return (
     <main role="main">
@@ -62,14 +94,10 @@ const AddBooks = () => {
           <div className="row">
             <div className="col-md-12">
               <ul className="list-group">
-                <li className="list-group-item list-group-item-light d-flex justify-content-between">
-                      livres enregistrés ici
-                </li>
+               {displayData}
               </ul>
 
-                <div className="d-flex justify-content-center">
-                    <button className="btn btn-danger mt-4 mb-5">Effacer tous les livres</button>
-                </div>
+               {deletAllBooksBtn}
 
             </div>
         </div>
@@ -78,4 +106,16 @@ const AddBooks = () => {
   );
 };
 
-export default AddBooks;
+const addStateToProps = (state) => {
+  return {
+    libraryData: state.library.books
+  }
+}
+
+const addDispatchToProps = (dispatch) => {
+  return {
+    addBook: (param) => dispatch(addBook(param))
+  }
+}
+
+export default connect(addStateToProps, addDispatchToProps)(AddBooks);

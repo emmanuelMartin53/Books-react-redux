@@ -1,12 +1,15 @@
-import { createStore, combineReducers } from "redux";
-import booksReducer from "./books/reducerBooks";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import reducerAddBooks from "./reducers/reducerAddBooks";
 
-
+// Combine reducers si nécessaire
 const rootReducer = combineReducers({
-  book: booksReducer
-})
+  library: reducerAddBooks
+});
 
-
-const store = createStore(rootReducer)
+// Configure le store
+const store = configureStore({
+  reducer: rootReducer
+  // ✅ Thunk est déjà inclus automatiquement
+});
 
 export default store;
