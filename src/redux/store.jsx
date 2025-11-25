@@ -1,9 +1,12 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore} from "@reduxjs/toolkit";
 import reducerAddBooks from "./reducers/reducerAddBooks";
+import reducerFetchBooks from "./reducers/reducerFetchBooks";
+
 
 // Combine reducers si nécessaire
 const rootReducer = combineReducers({
-  library: reducerAddBooks
+  library: reducerAddBooks,
+  search: reducerFetchBooks
 });
 
 // Configure le store
