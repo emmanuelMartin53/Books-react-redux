@@ -1,4 +1,4 @@
-
+import { Link } from "react-router-dom";
 const NavBar = () => {
   return (
 
@@ -7,9 +7,12 @@ const NavBar = () => {
           <h4 className="mr-md-auto">
           <a href="/" className="text-decoration-none text-white">BOOKS</a>
           </h4>
-      </div>
 
-      {/* MENU */}
+        <nav className="btn-group ms-md-auto">
+          <Link to="/" className="btn btn-light">Accueil</Link>
+          <Link to="/search" className="btn btn-light">Rechercher</Link>
+        </nav>
+      </div>
    </header>
   )
 }
