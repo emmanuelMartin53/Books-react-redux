@@ -1,4 +1,5 @@
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import './App.css';
 import NavBar from './components/NavBar';
 import AddBooks from './container/AddBooks';
@@ -17,6 +18,7 @@ function App() {
           <Route path="/search" element={ <SearchBooks /> }/>
         </Routes>
         <Footer />
+        <ToastContainer  position="bottom-right" theme="colored"/>
       </Router>
     </div>
   )

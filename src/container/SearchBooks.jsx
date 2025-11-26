@@ -1,8 +1,15 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchBooks } from "../redux/actions/actionFetchBooks";
+import { addBook } from "../redux/actions/actionAddBooks"
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+
 
 const SearchBooks = () => {
+
+  // useState pour rechercher unn style
   const [title, setTitle] = useState("");
 
   const state = useSelector((state) => state.search);
@@ -12,6 +19,13 @@ const SearchBooks = () => {
     event.preventDefault();
     dispatch(fetchBooks(title));
   };
+
+
+  const handleSave = (title, author) => {
+    const bookToSave = {title: title, author: author}
+    dispatch(addBook(bookToSave))
+    toast.info("Livre enregistré")
+  }
 
   const displayFetchedBooks = state.isLoading ? (
     <div className="d-flex justify-content-center">
@@ -76,7 +90,12 @@ const SearchBooks = () => {
                 </a>
               )}
 
-              <button className="btn btn-outline-secondary ms-3">Enregistrer</button>
+              <button
+                onClick={() => handleSave(info.title, info.authors)}
+                className="btn btn-outline-secondary ms-3"
+              >
+                Enregistrer
+              </button>
             </div>
           </div>
         </div>
@@ -107,8 +126,13 @@ const SearchBooks = () => {
             </div>
 
             <div className="col-auto">
-              <button className="btn btn-outline-secondary">Rechercher</button>
+              <button
+                className="btn btn-outline-secondary"
+              >
+                Rechercher
+              </button>
             </div>
+
           </form>
         </div>
       </div>
